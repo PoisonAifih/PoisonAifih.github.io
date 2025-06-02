@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabyVision - Orders</title>
+    <link rel="stylesheet" href="orderStyle.css">
+    </head>
+<body>
+    <div class="container">
+        <div id="dashboard-container"></div>
+        
+        <div class="main-content">
+
+            <div id="sidebar-container"></div>
+            
+            <div class="content">
+                <div class="orders-container">
+                    <div class="order-section">
+                        <h2>Current order</h2>
+                        <div class="order-card current">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/90EE90/444/PP" alt="Pika pika">
+                            </div>
+                            <div class="client-name">Pika pika</div>
+                            <div class="order-details">
+                                <div class="order-date">10/05/2025</div>
+                                <div class="order-amount">Rp. 1.000.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">08.00-17.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-done">Done</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-section">
+                        <h2>Next orders</h2>
+                        <div class="order-card next">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/89CFF0/444/KD" alt="Kodok">
+                            </div>
+                            <div class="client-name">Kodok</div>
+                            <div class="order-details">
+                                <div class="order-date">12/05/2025</div>
+                                <div class="order-amount">Rp. 1.300.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">08.00-19.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-cancel">Cancel</button>
+                            </div>
+                        </div>
+
+                        <div class="order-card next">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/87CEEB/444/GT" alt="Goat">
+                            </div>
+                            <div class="client-name">GOAT</div>
+                            <div class="order-details">
+                                <div class="order-date">15/05/2025</div>
+                                <div class="order-amount">Rp. 1.100.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">06.00-17.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-cancel">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="order-section">
+                        <h2>Orders list</h2>
+                        <div class="order-card pending">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/FFA500/444/CZ" alt="Charizard">
+                            </div>
+                            <div class="client-name">Charizard</div>
+                            <div class="order-details">
+                                <div class="order-date">20/05/2025</div>
+                                <div class="order-amount">Rp. 1.250.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">08.00-17.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-accept">Accept</button>
+                                <button class="btn-reject">Reject</button>
+                            </div>
+                        </div>
+
+                        <div class="order-card pending">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/98FB98/444/VS" alt="Venusaur">
+                            </div>
+                            <div class="client-name">Venusaur</div>
+                            <div class="order-details">
+                                <div class="order-date">25/05/2025</div>
+                                <div class="order-amount">Rp. 1.300.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">06.00-18.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-accept">Accept</button>
+                                <button class="btn-reject">Reject</button>
+                            </div>
+                        </div>
+
+                        <div class="order-card pending">
+                            <div class="client-avatar">
+                                <img src="https://placeholder.pics/svg/60/ADD8E6/444/BS" alt="Blastoise">
+                            </div>
+                            <div class="client-name">Blastoise</div>
+                            <div class="order-details">
+                                <div class="order-date">27/05/2025</div>
+                                <div class="order-amount">Rp. 1.500.000</div>
+                                <div class="order-time-slot">
+                                    <span class="time">06.00-19.00</span>
+                                    <button class="info-btn">Info</button>
+                                </div>
+                            </div>
+                            <div class="action-buttons">
+                                <button class="btn-accept">Accept</button>
+                                <button class="btn-reject">Reject</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../Global/utils.js"></script>
+<script src="../orders/orderJs.js"></script>
+</html>

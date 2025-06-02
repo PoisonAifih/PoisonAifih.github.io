@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BabyVision</title>
+    <link rel="stylesheet" href="../babysitter/bsStyle.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div id="dashboard-container"></div>
+
+      <div class="main-content">
+        <div id="sidebar-container"></div>
+
+        <div class="content">
+          <div class="section-row">
+            <div class="order-panel">
+              <h2 class="panel-title">Your order</h2>
+              <div class="order-cards">
+                <div class="order-card" id="order-card-1">
+                  <div class="client-image">
+                    <img
+                      src="https://placeholder.pics/svg/60/FFD966/FFF/PP"
+                      alt="Pika Pika"
+                    />
+                  </div>
+                  <div class="order-details">
+                    <div class="order-header">
+                      <h4>Pika pika</h4>
+                    </div>
+                    <div class="order-info">
+                      <div class="order-date">10/05/2025</div>
+                      <div class="order-amount">Rp. 1.000.000</div>
+                    </div>
+                    <div class="order-time">
+                      <span class="time-slot">08.00-17.00</span>
+                      <button class="info-btn">Info</button>
+                    </div>
+                    <div class="progress-container">
+                      <div class="progress-bar" style="width: 35%"></div>
+                      <span class="progress-text">35% Complete</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="order-card" id="order-card-2">
+                  <div class="client-image">
+                    <img
+                      src="https://placeholder.pics/svg/60/89CFF0/FFF/KD"
+                      alt="Kodok"
+                    />
+                  </div>
+                  <div class="order-details">
+                    <div class="order-header">
+                      <h4>Kodok</h4>
+                    </div>
+                    <div class="order-info">
+                      <div class="order-date">12/05/2025</div>
+                      <div class="order-amount">Rp. 1.300.000</div>
+                    </div>
+                    <div class="order-time">
+                      <span class="time-slot">08.00-16.00</span>
+                      <button class="info-btn">Info</button>
+                    </div>
+                    <div class="progress-container">
+                      <div class="progress-bar" style="width: 45%"></div>
+                      <span class="progress-text">45% Complete</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="order-panel">
+              <h2 class="panel-title">Calendar</h2>
+              <div id="calendar-container"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="../Global/utils.js"></script>
+  <script src="../babysitter/bsJs.js"></script>
+  <script src="../babysitter/eventJs.js"></script>
+</html>

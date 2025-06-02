@@ -1,0 +1,72 @@
+@import url('../Global/global.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-dark);
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+.main-content {
+    grid-column: 1;
+    grid-row: 2;
+    background-color: var(--cream);
+    transition: width 0.3s ease;
+    width: calc(100% - 300px);
+}
+
+.main-content.full-width {
+    width: 100%;
+}
+
+.content {
+    padding: 20px;
+}
+
+
+.babysitter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.babysitter-card {
+    flex: 1 1 calc(33.333% - 20px);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+}
+
+.babysitter-card:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    .menu ul {
+        display: none;
+    }
+
+    .profile-sidebar {
+        width: 100%;
+        height: auto;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+
+    .babysitter-card {
+        flex: 1 1 100%;
+    }
+}

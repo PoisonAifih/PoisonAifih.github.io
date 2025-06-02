@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('../Global/global.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background-color: var(--cream);
+    color: var(--text-dark);
+}
+
+.container {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    min-height: 100vh;
+}
+
+/* Main Content Styles - Fixed to be consistent with other pages */
+.main-content {
+    grid-column: 1;
+    grid-row: 2;
+    background-color: var(--cream);
+    transition: width 0.3s ease;
+    width: calc(100% - 300px);
+    display: flex; /* Add flex display */
+}
+
+.main-content.full-width {
+    width: 100%;
+}
+
+/* Content Styles */
+.content {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.page-title {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.month-selector {
+    background-color: white;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+}
+
+.month-selector h2 {
+    font-weight: 600;
+}
+
+.dropdown-arrow {
+    font-size: 20px;
+}
+
+/* Calendar Entries */
+.calendar-entries {
+    margin-top: 20px;
+}
+
+.calendar-entry {
+    border: 1px solid #eaeaea;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow);
+    background-color: #fff;
+}
+
+.entry-date {
+    background-color: var(--yellow);
+    width: 120px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 1px solid #eaeaea;
+}
+
+.day-name {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.day-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--red);
+}
+
+.entry-details {
+    flex: 1;
+    padding: 20px;
+}
+
+.entry-client {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.entry-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+}
+
+.info-item i {
+    width: 20px;
+    color: var(--text-dark);
+}
+
+/* Action buttons */
+.entry-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+    gap: 10px;
+}
+
+.btn-view {
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background-color: var(--red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-view:hover, .btn-cancel:hover {
+    opacity: 0.9;
+}
+
+/* Responsive Styles */
+@media (max-width: 1100px) {
+    .entry-date {
+        width: 90px;
+        padding: 15px;
+    }
+    
+    .day-name {
+        font-size: 16px;
+    }
+    
+    .day-number {
+        font-size: 28px;
+    }
+    
+    .entry-client {
+        font-size: 20px;
+    }
+    
+    .info-item {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    .calendar-entry {
+        flex-direction: column;
+    }
+    
+    .entry-date {
+        width: 100%;
+        flex-direction: row;
+        justify-content: center;
+        padding: 10px;
+        border-right: none;
+        border-bottom: 1px solid #eaeaea;
+    }
+    
+    .day-name {
+        margin-right: 10px;
+        margin-bottom: 0;
+    }
+    
+    .entry-details {
+        padding: 15px;
+    }
+    
+    .entry-client {
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+    
+    .info-item {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .entry-actions {
+        flex-direction: column;
+    }
+    
+    .btn-view, .btn-cancel {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .info-item {
+        font-size: 12px;
+    }
+}
