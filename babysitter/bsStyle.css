@@ -19,35 +19,32 @@ body {
   min-height: 100vh;
 }
 
-/* Main Content Styles */
 .main-content {
   grid-column: 1;
   grid-row: 2;
   background-color: var(--cream);
   transition: width 0.3s ease;
   width: calc(100% - 300px);
-  display: flex; /* Add flex display */
+  display: flex;
 }
 
 .main-content.full-width {
   width: 100%;
 }
 
-/* Content Styles */
 .content {
   padding: 20px;
   overflow-y: auto;
-  flex: 1; /* Take remaining space */
+  flex: 1;
 }
 
 .section-row {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+  grid-template-columns: repeat(2, 1fr);
   gap: 20px;
   margin-bottom: 20px;
 }
 
-/* Improve the calendar styling */
 #calendar-container {
   height: 100%;
   display: flex;
@@ -90,7 +87,6 @@ body {
   cursor: not-allowed;
 }
 
-/* Make sure has-event indicator is more visible */
 .has-event {
   position: relative;
   font-weight: bold;
@@ -107,7 +103,6 @@ body {
   border-radius: 50%;
 }
 
-/* Order Panel Styles */
 .order-panel,
 .stats-panel {
   background-color: white;
@@ -183,7 +178,6 @@ body {
   cursor: pointer;
 }
 
-/* Stats Panel Styles */
 .stats-cards {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -227,7 +221,6 @@ body {
   color: var(--text-dark);
 }
 
-/* Calendar Styles */
 .calendar-header {
   display: flex;
   justify-content: space-between;
@@ -380,7 +373,6 @@ body {
   background-color: var(--green);
 }
 
-/* Tips Section Styles */
 .tips-section {
   background-color: white;
   padding: 20px;
