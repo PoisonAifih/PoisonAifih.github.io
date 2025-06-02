@@ -8,14 +8,14 @@ function setupNotificationDropdowns() {
     notificationDropdown.innerHTML = `
       <div class="dropdown-header">Notifications</div>
       <div class="dropdown-item unread">
-        <div class="notification-title">New booking request</div>
-        <div class="notification-text">You have a new booking request from Aiih</div>
-        <div class="notification-time">5 minutes ago</div>
+        <div class="notification-title">Booking Offer</div>
+        <div class="notification-text">Check out the rising babysitter</div>
+        <div class="notification-time">10 minutes ago</div>
       </div>
       <div class="dropdown-item unread">
         <div class="notification-title">Schedule update</div>
         <div class="notification-text">Your May 15 appointment has been confirmed</div>
-        <div class="notification-time">2 hours ago</div>
+        <div class="notification-time">2 minutes ago</div>
       </div>
       <div class="dropdown-footer">View all notifications</div>
     `;
@@ -38,7 +38,7 @@ function setupNotificationDropdowns() {
       <div class="dropdown-header">Messages</div>
       <div class="dropdown-item unread">
         <div class="message-sender">BabyVision Support</div>
-        <div class="message-preview">New earnings policy update</div>
+        <div class="message-preview">New privacy policy update</div>
         <div class="message-time">Yesterday</div>
       </div>
       <div class="dropdown-footer">View all messages</div>

@@ -1,100 +1,132 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BabyVision</title>
-    <link rel="stylesheet" href="../dashboard/dashboardStyle.css">
-</head>
-<body>
+    <link rel="stylesheet" href="../dashboard/dashboardStyle.css" />
+  </head>
+  <body>
     <div class="container">
-        <div id="dashboard-container"></div>
-        
-        <div class="main-content">
-            <div id="sidebar-container"></div>
-            <div class="content">
-                <div class="column-section">
-                    <div class="main-panel date-display">
-                        <h2>Today's Date</h2>
-                        <div class="current-date"></div>
-                        <div class="current-time"></div>
-                    </div>
-                    
-                    <div class="main-panel schedule-container">
-                        <h2>Current Schedule</h2>
-                        <div class="schedule-card">
-                            <div class="schedule-time">11:00 - 13:00</div>
-                            <div class="schedule-info">
-                                <h3>Playtime</h3>
-                                <div class="schedule-status active">Active Now</div>
-                            </div>
-                        </div>
-                        <div class="schedule-card upcoming">
-                            <div class="schedule-time">13:00 - 16:00</div>
-                            <div class="schedule-info">
-                                <h3>Nap Time</h3>
-                                <div class="schedule-status">Upcoming</div>
-                            </div>
-                        </div>
-                        <div class="schedule-card upcoming">
-                            <div class="schedule-time">16:00 - 17:00</div>
-                            <div class="schedule-info">
-                                <h3>Afternoon Bath</h3>
-                                <div class="schedule-status">Upcoming</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+      <div id="dashboard-container"></div>
 
-                <div class="column-section">
-                    <div class="tips-section">
-                        <h3>Daily Tips</h3>
-                        <div class="tips-grid">
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-baby"></i>
-                                <h4>Baby Sleep</h4>
-                                <p>Tips for better baby sleep patterns</p>
-                            </a>
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-utensils"></i>
-                                <h4>Nutrition</h4>
-                                <p>Healthy meal ideas for toddlers</p>
-                            </a>
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-gamepad"></i>
-                                <h4>Activities</h4>
-                                <p>Fun indoor activities for rainy days</p>
-                            </a>
-                        </div>
-                    </div>
-                    
-                    <div class="tips-section">
-                        <h3>Scheduling Tips</h3>
-                        <div class="tips-grid">
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-calendar-check"></i>
-                                <h4>Regular Schedule</h4>
-                                <p>Benefits of maintaining routine care times</p>
-                            </a>
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-user-check"></i>
-                                <h4>Finding Sitters</h4>
-                                <p>How to select the perfect babysitter</p>
-                            </a>
-                            <a href="#" class="tip-box">
-                                <i class="fas fa-clipboard-list"></i>
-                                <h4>Care Instructions</h4>
-                                <p>Creating effective babysitter guidelines</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+      <div class="main-content">
+        <div id="sidebar-container"></div>
+        <div class="content">
+          <div class="column-section">
+            <div class="main-panel date-display">
+              <h2>Today's Date</h2>
+              <div class="current-date"></div>
+              <div class="current-time"></div>
             </div>
+
+            <div class="main-panel schedule-container">
+              <h2>Current Schedule</h2>
+            </div>
+          </div>
+
+          <div class="tips-section">
+            <h3>Daily Tips</h3>
+            <div class="tips-grid">
+              <div class="tip-box sleep-tips" data-category="sleep">
+                <div class="tip-header">
+                  <div class="tip-icon">🛌</div>
+                  <h4>Baby Sleep</h4>
+                  <p>Tips for better baby sleep patterns</p>
+                </div>
+                <div class="tip-dropdown-content">
+                  <ul>
+                    <li>
+                      <span class="tip-icon-small">🏠</span> Stick to a routine
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">💡</span> Dim lights 1 hour
+                      before bedtime
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">📱</span> Avoid screens
+                      around sleep time
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🎵</span> Use white noise or
+                      calming sounds
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🧸</span> Keep a comfort
+                      object nearby
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="tip-box nutrition-tips" data-category="nutrition">
+                <div class="tip-header">
+                  <div class="tip-icon">🥦</div>
+                  <h4>Nutrition</h4>
+                  <p>Healthy meal ideas for toddlers</p>
+                </div>
+                <div class="tip-dropdown-content">
+                  <ul>
+                    <li>
+                      <span class="tip-icon-small">🍎</span> Offer a variety of
+                      fruits and vegetables
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🥛</span> Include protein and
+                      calcium sources
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🥄</span> Keep portions
+                      appropriate for age
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">⏰</span> Maintain regular
+                      meal schedules
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🧁</span> Limit sugar intake
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="tip-box activities-tips" data-category="activities">
+                <div class="tip-header">
+                  <div class="tip-icon">🚼</div>
+                  <h4>Activities</h4>
+                  <p>Fun indoor activities for rainy days</p>
+                </div>
+                <div class="tip-dropdown-content">
+                  <ul>
+                    <li>
+                      <span class="tip-icon-small">🎨</span> Set up a simple art
+                      station
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">📚</span> Read stories with
+                      dramatic voices
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🧩</span> Try age-appropriate
+                      puzzles
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🏡</span> Build a blanket
+                      fort
+                    </li>
+                    <li>
+                      <span class="tip-icon-small">🎵</span> Have a dance party
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-        
-</body>
-<script src="../Global/utils.js"></script>
-<script src="../dashboard/dashboardJs.js"></script>
+  </body>
+  <script src="../Global/utils.js"></script>
+  <script src="../Global/scheduleSharing.js"></script>
+  <script src="../dashboard/dashboardJs.js"></script>
+  <script src="../Global/notif.js"></script>
+  <script src="../schedule/scheduleShare.js"></script>
 </html>
