@@ -1,9 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  fetch("../Global/Dashboardbb.html")
+  fetch("../Global/DashboardBb.html")
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("dashboard-container").innerHTML = html;
-      return fetch("../Global/Sidebb.html");
+
+      if (typeof setupNotificationDropdowns === "function") {
+        setupNotificationDropdowns();
+      } else {
+        console.warn("setupNotificationDropdowns not found!");
+      }
+
+      return fetch("../Global/SideBb.html");
     })
     .then((response) => response.text())
     .then((html) => {

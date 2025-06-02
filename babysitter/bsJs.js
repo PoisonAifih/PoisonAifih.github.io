@@ -3,6 +3,13 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("dashboard-container").innerHTML = html;
+
+      if (typeof setupNotificationDropdowns === "function") {
+        setupNotificationDropdowns();
+      } else {
+        console.warn("setupNotificationDropdowns not found!");
+      }
+
       return fetch("../Global/SideBb.html");
     })
     .then((response) => response.text())
