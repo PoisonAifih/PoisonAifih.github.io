@@ -66,16 +66,11 @@ body {
 }
 
 .calendar-header button {
-  background-color: var(--cream);
+  background: none;
   border: none;
-  border-radius: 50%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 18px;
   cursor: pointer;
-  font-weight: bold;
+  padding: 5px 10px;
 }
 
 .calendar-header button:not(:disabled):hover {
@@ -85,6 +80,10 @@ body {
 .calendar-header button:disabled {
   opacity: 0.3;
   cursor: not-allowed;
+}
+
+.calendar-header h3 {
+  margin: 0;
 }
 
 .has-event {
@@ -103,11 +102,18 @@ body {
   border-radius: 50%;
 }
 
-.order-panel,
-.stats-panel {
+.event-indicator.status-finished {
+  background-color: var(--green);
+}
+
+.event-indicator.status-cancelled {
+  background-color: var(--red);
+}
+
+.order-panel {
   background-color: white;
   border-radius: 15px;
-  padding: 20px;
+  padding: 70px;
   box-shadow: var(--shadow);
 }
 
@@ -119,7 +125,7 @@ body {
 .order-cards {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
 }
 
 .order-card {
@@ -129,6 +135,14 @@ body {
   display: flex;
   align-items: center;
   gap: 15px;
+}
+
+.order-card.status-finished {
+  background-color: var(--green);
+}
+
+.order-card.status-cancelled {
+  background-color: var(--red);
 }
 
 .client-image img {
@@ -178,75 +192,12 @@ body {
   cursor: pointer;
 }
 
-.stats-cards {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 15px;
-}
-
-.stats-card {
-  background-color: var(--yellow);
-  padding: 15px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  transition: transform 0.3s ease;
-}
-
-.stats-card:hover {
-  transform: translateY(-5px);
-}
-
-.stats-icon {
-  font-size: 24px;
-  background-color: white;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.stats-info h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 5px;
-}
-
-.stats-info p {
-  font-size: 12px;
-  color: var(--text-dark);
-}
-
-.calendar-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.prev-month,
-.next-month {
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
 .calendar-days {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   text-align: center;
   font-weight: bold;
   margin-bottom: 10px;
-}
-
-.calendar-dates {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar-dates div {
@@ -269,185 +220,33 @@ body {
   color: var(--text-light);
 }
 
-.has-event {
-  font-weight: bold;
-}
-
-.has-event::after {
-  content: "";
-  width: 5px;
-  height: 5px;
-  background-color: var(--red);
-  border-radius: 50%;
-  position: absolute;
-  bottom: 5px;
-}
-
-.date-display {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: var(--shadow);
-}
-
-.date-display h2 {
-  margin-bottom: 15px;
-}
-
-.current-date {
-  font-size: 24px;
-  font-weight: 700;
-  margin-bottom: 10px;
-}
-
-.current-time {
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.schedule-container {
-  background-color: white;
-  border-radius: 15px;
-  padding: 20px;
-  box-shadow: var(--shadow);
-}
-
-.schedule-container h2 {
-  margin-bottom: 20px;
-}
-
-.schedule-card {
-  background-color: var(--yellow);
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.schedule-card:hover {
-  transform: translateY(-3px);
-}
-
-.schedule-card.upcoming {
-  background-color: var(--lightblue);
-}
-
-.schedule-time {
-  background-color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  font-weight: 600;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.schedule-info {
-  flex: 1;
-  padding-left: 15px;
-}
-
-.schedule-info h3 {
-  margin-bottom: 5px;
-}
-
-.schedule-status {
-  background-color: var(--yellow);
-  padding: 5px 10px;
-  border-radius: 15px;
-  font-size: 12px;
-  display: inline-block;
-  margin-top: 5px;
-}
-
-.schedule-status.active {
-  background-color: var(--green);
-}
-
-.tips-section {
-  background-color: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: var(--shadow);
-  margin-top: 20px;
-}
-
-.tips-section h3 {
-  margin-bottom: 20px;
-  color: var(--text-dark);
-  text-align: center;
-}
-
-.tips-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.tip-box {
-  background-color: var(--cream);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-  transition: all 0.3s ease;
-  text-decoration: none;
-  color: var(--text-dark);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: var(--shadow);
-}
-
-.tip-box:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.tip-box h4 {
-  margin-bottom: 10px;
-  font-size: 18px;
-}
-
-.tip-box p {
-  font-size: 14px;
-  color: var(--text-dark);
-}
-
-.progress-container {
+.main-progress-container {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
-  height: 15px;
+  height: 20px;
   width: 100%;
-  margin-top: 10px;
+  margin: 15px 0 25px;
   position: relative;
   overflow: hidden;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.progress-bar {
+.main-progress-bar {
   background-color: var(--green);
   height: 100%;
   border-radius: 10px;
-  transition: width 0.3s ease;
+  transition: width 0.5s ease;
 }
 
-.progress-text {
+.main-progress-text {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 10px;
+  font-size: 14px;
   color: var(--text-dark);
   font-weight: 600;
-  text-shadow: 0px 0px 2px rgba(255, 255, 255, 0.8);
+  text-shadow: 0px 0px 3px rgba(255, 255, 255, 0.9);
 }
 
 .selected-date {
@@ -470,19 +269,34 @@ body {
   background-color: var(--cream);
 }
 
-.calendar-header button {
-  background: none;
+.order-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.btn-finish,
+.btn-cancel {
+  padding: 5px 15px;
   border: none;
-  font-size: 18px;
+  border-radius: 5px;
   cursor: pointer;
-  padding: 5px 10px;
+  font-size: 14px;
 }
 
-.calendar-header button:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
+.btn-finish {
+  background-color: var(--green);
+  color: white;
 }
 
-.calendar-header h3 {
-  margin: 0;
+.btn-cancel {
+  background-color: var(--red);
+  color: white;
+}
+
+.status-finished .btn-finish,
+.status-cancelled .btn-finish,
+.status-finished .btn-cancel,
+.status-cancelled .btn-cancel {
+  display: none;
 }
