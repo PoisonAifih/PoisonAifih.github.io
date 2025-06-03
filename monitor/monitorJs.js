@@ -20,4 +20,15 @@ document.addEventListener("DOMContentLoaded", function () {
     .catch((error) => {
       console.error("Error loading components:", error);
     });
+
+  const video = document.querySelector(".video-placeholder video");
+
+  function playVideo() {
+    video.play().catch((error) => {
+      console.error("Error playing video:", error);
+      console.log("Try clicking on the video first or use the controls");
+    });
+  }
+  const talkBtn = document.querySelector(".talk-btn");
+  talkBtn.addEventListener("click", playVideo);
 });
