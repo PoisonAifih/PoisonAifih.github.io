@@ -1,9 +1,11 @@
 const scheduleSharing = {
   loadInitialSchedules() {
     if (localStorage.getItem("schedules")) {
+      console.log("Schedules already exist in localStorage");
       return;
     }
 
+    console.log("Loading initial schedules from HTML");
     const defaultSchedules = [];
     document
       .querySelectorAll(".schedule-container .schedule-card")
@@ -11,13 +13,19 @@ const scheduleSharing = {
         if (!card.parentElement.classList.contains("main-panel")) {
           const timeText = card.querySelector(".schedule-time").textContent;
           const activity = card.querySelector(".schedule-info h3").textContent;
+          const status = card.querySelector(".schedule-status").textContent;
 
           const isCompleted = card.hasAttribute("data-completed");
           const backgroundColor = card.style.backgroundColor || "";
+          const isActive = card
+            .querySelector(".schedule-status")
+            .classList.contains("active");
 
           defaultSchedules.push({
             time: timeText,
             activity: activity,
+            status: status,
+            isActive: isActive,
             isCompleted: isCompleted,
             backgroundColor: backgroundColor,
           });
@@ -25,6 +33,7 @@ const scheduleSharing = {
       });
 
     if (defaultSchedules.length > 0) {
+      console.log("Saving initial schedules:", defaultSchedules);
       localStorage.setItem("schedules", JSON.stringify(defaultSchedules));
     }
   },
@@ -76,7 +85,6 @@ const scheduleSharing = {
     }
     return minutes1 - minutes2;
   },
-
   updateScheduleDisplays() {
     const dashboardScheduleContainer = document.querySelector(
       ".main-panel.schedule-container"
@@ -147,6 +155,8 @@ const scheduleSharing = {
       noSchedulesMsg.style.padding = "20px";
       dashboardScheduleContainer.appendChild(noSchedulesMsg);
     }
+
+    this.syncScheduleStatus();
   },
 
   syncScheduleStatus() {
@@ -214,4 +224,16 @@ document.addEventListener("DOMContentLoaded", function () {
     scheduleSharing.syncScheduleStatus();
     scheduleSharing.updateScheduleDisplays();
   }, 30000);
+
+  window.addEventListener("storage", function (e) {
+    if (e.key === "schedules") {
+      scheduleSharing.syncScheduleStatus();
+      scheduleSharing.updateScheduleDisplays();
+    }
+  });
+
+  window.addEventListener("scheduleUpdated", function (e) {
+    scheduleSharing.syncScheduleStatus();
+    scheduleSharing.updateScheduleDisplays();
+  });
 });

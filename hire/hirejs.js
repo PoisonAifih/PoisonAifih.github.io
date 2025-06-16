@@ -1,54 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
+  setupPage();
+  setupHireButtons();
+});
+
+function setupPage() {
   fetch("../Global/Dashboard.html")
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("dashboard-container").innerHTML = html;
-
       if (typeof setupNotificationDropdowns === "function") {
         setupNotificationDropdowns();
-      } else {
-        console.warn("setupNotificationDropdowns not found!");
       }
-
       return fetch("../Global/Side.html");
     })
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("sidebar-container").innerHTML = html;
       setTimeout(() => utils.setupSidebarToggle(), 100);
-      setupBabysitterInfoButtons();
     })
     .catch((error) => {
       console.error("Error loading components:", error);
+      feedback.error("Failed to load page components");
     });
-});
+}
+
+function setupHireButtons() {
+  setupBabysitterInfoButtons();
+}
 
 const babysitterData = [
   {
     name: "Emily Sigma",
+    age: 20,
+    experience: "2 years",
+    specialization: "Technology and games",
+    availability: "Weekends and evenings",
+    education: "Bachelor's in Computer Science",
+    languages: "English, Indonesian",
+    hourlyRate: "$20/hour",
+    phone: "(555) 123-9874",
+    email: "emily.sigma@binus.com",
+    bio: "Tech-savvy babysitter with a passion for games and educational technology. Experienced in engaging children through interactive learning.",
+  },
+  {
+    name: "Sophia Smith",
     age: 28,
-    experience: "3 years",
-    specialization:
-      "Infant care specialist with training in early childhood development",
-    availability: "Weekdays 8am-6pm, Some weekends",
-    education: "Bachelor's in Child Development",
+    experience: "5 years",
+    specialization: "Educational activities, arts and crafts",
+    availability: "Weekdays 9 AM - 6 PM, Weekends by request",
+    education: "Bachelor's in Early Childhood Education",
     languages: "English, Spanish",
     hourlyRate: "$25/hour",
     phone: "(555) 123-4567",
-    email: "emily.sigma@example.com",
-    bio: "Passionate about providing nurturing care for infants. Specializes in developing stimulating activities that promote cognitive and motor skills.",
-  },
-  {
-    name: "Sophia Skibidi",
-    age: 32,
-    experience: "5 years",
-    specialization: "Toddler care and educational activities",
-    availability: "Flexible schedule including evenings",
-    education: "Master's in Early Education",
-    languages: "English, French",
-    hourlyRate: "$28/hour",
-    phone: "(555) 987-6543",
-    email: "sophia.s@example.com",
+    email: "sophia.smith@binus.com",
     bio: "Former preschool teacher with expertise in creative play and educational activities. Known for creating structured but fun environments for children.",
   },
   {
@@ -61,7 +65,7 @@ const babysitterData = [
     languages: "English, Mandarin",
     hourlyRate: "$30/hour",
     phone: "(555) 456-7890",
-    email: "tungtung.w@example.com",
+    email: "tung.willy@binus.com",
     bio: "Specialized in caring for children with special needs. Patient, compassionate, and trained in emergency medical procedures.",
   },
 ];
@@ -74,16 +78,17 @@ function setupBabysitterInfoButtons() {
     const infoBtn = buttons[0];
     const hireBtn = buttons[1];
     const sitter = babysitterData[index];
-
     if (infoBtn) {
-      infoBtn.addEventListener("click", () => showBabysitterInfo(sitter));
+      infoBtn.addEventListener("click", () =>
+        showBabysitterInfoDetailed(sitter)
+      );
     }
     if (hireBtn) {
       hireBtn.addEventListener("click", () => showHireConfirmation(sitter));
     }
   });
 
-  function showBabysitterInfo(sitter) {
+  function showBabysitterInfoDetailed(sitter) {
     removeExistingPopups();
 
     const popupOverlay = document.createElement("div");

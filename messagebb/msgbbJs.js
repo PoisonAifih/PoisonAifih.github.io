@@ -97,7 +97,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     loadMessages();
-
     chatItems.forEach((item) => {
       item.addEventListener("click", function () {
         const contactName = this.querySelector("h4").textContent;
@@ -112,6 +111,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         initialMessagesLoaded = false;
         currentChat = contactName;
+
+        chatMessages.innerHTML = "";
 
         if (currentChat === "Aiih") {
           loadMessages();
@@ -167,7 +168,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       chatMessages.scrollTop = chatMessages.scrollHeight;
     }
-
     function loadMessages() {
       if (currentChat !== "Aiih") return;
 
@@ -176,18 +176,16 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!initialMessagesLoaded) {
         initialMessagesLoaded = true;
 
-        if (!document.querySelector(".message")) {
-          chatMessages.innerHTML = `
-            <div class="message received">
-              <p>Hi! Are you available this weekend?</p>
-              <span class="message-time">10:30 AM</span>
-            </div>
-            <div class="message sent">
-              <p>Yes, I am. What time do you need me?</p>
-              <span class="message-time">10:45 AM</span>
-            </div>
-          `;
-        }
+        chatMessages.innerHTML = `
+          <div class="message received">
+            <p>Hi! Are you available this weekend?</p>
+            <span class="message-time">10:30 AM</span>
+          </div>
+          <div class="message sent">
+            <p>Yes, I am. What time do you need me?</p>
+            <span class="message-time">10:45 AM</span>
+          </div>
+        `;
       }
 
       messages.forEach((msg) => {

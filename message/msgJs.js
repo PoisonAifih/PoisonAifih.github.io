@@ -151,66 +151,46 @@ document.addEventListener("DOMContentLoaded", function () {
     function loadMessages() {
       if (currentChat !== "Mega Toto") return;
 
+      chatMessages.innerHTML = "";
+
       const messages = JSON.parse(localStorage.getItem("messages") || "[]");
 
       if (!initialMessagesLoaded) {
         initialMessagesLoaded = true;
 
-        if (!document.querySelector(".message")) {
+        if (messages.length === 0) {
           chatMessages.innerHTML = `
-            <div class="message sent">
-              <p>Hi! Are you available this weekend?</p>
-              <span class="message-time">10:30 AM</span>
-            </div>
-            <div class="message received">
-              <p>Yes, I am. What time do you need me?</p>
-              <span class="message-time">10:45 AM</span>
-            </div>
-          `;
+        <div class="message sent">
+          <p>Hi! Are you available this weekend?</p>
+          <span class="message-time">10:30 AM</span>
+        </div>
+        <div class="message received">
+          <p>Yes, I am. What time do you need me?</p>
+          <span class="message-time">10:45 AM</span>
+        </div>
+      `;
         }
       }
 
       messages.forEach((msg) => {
-        const existingMessages = Array.from(
-          chatMessages.querySelectorAll(".message")
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add(
+          "message",
+          msg.sender === "parent" ? "sent" : "received"
         );
-        const isDuplicate = existingMessages.some((existingMsg) => {
-          const msgText = existingMsg.querySelector("p").textContent;
-          const msgTime =
-            existingMsg.querySelector(".message-time").textContent;
-          const date = new Date(msg.timestamp);
-          const hours = date.getHours() % 12 || 12;
-          const minutes = date.getMinutes().toString().padStart(2, "0");
-          const ampm = date.getHours() >= 12 ? "PM" : "AM";
-          const timeStr = `${hours}:${minutes} ${ampm}`;
 
-          return (
-            msgText === msg.text &&
-            (msgTime === timeStr ||
-              Math.abs(new Date(msg.timestamp) - new Date()) < 4000)
-          );
-        });
+        const date = new Date(msg.timestamp);
+        const hours = date.getHours() % 12 || 12;
+        const minutes = date.getMinutes().toString().padStart(2, "0");
+        const ampm = date.getHours() >= 12 ? "PM" : "AM";
+        const timeStr = `${hours}:${minutes} ${ampm}`;
 
-        if (!isDuplicate) {
-          const messageDiv = document.createElement("div");
-          messageDiv.classList.add(
-            "message",
-            msg.sender === "parent" ? "sent" : "received"
-          );
+        messageDiv.innerHTML = `
+      <p>${msg.text}</p>
+      <span class="message-time">${timeStr}</span>
+    `;
 
-          const date = new Date(msg.timestamp);
-          const hours = date.getHours() % 12 || 12;
-          const minutes = date.getMinutes().toString().padStart(2, "0");
-          const ampm = date.getHours() >= 12 ? "PM" : "AM";
-          const timeStr = `${hours}:${minutes} ${ampm}`;
-
-          messageDiv.innerHTML = `
-            <p>${msg.text}</p>
-            <span class="message-time">${timeStr}</span>
-          `;
-
-          chatMessages.appendChild(messageDiv);
-        }
+        chatMessages.appendChild(messageDiv);
       });
 
       chatMessages.scrollTop = chatMessages.scrollHeight;

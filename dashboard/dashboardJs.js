@@ -18,8 +18,12 @@ function updateDateTime() {
     dateEl.textContent = date;
     timeEl.textContent = `${hours}:${minutes}:${seconds}`;
 
+    // Update schedule displays every minute and also sync status
     if (minutes === "00" && seconds === "00") {
-      scheduleSharing.updateScheduleDisplays();
+      if (typeof scheduleSharing !== "undefined") {
+        scheduleSharing.syncScheduleStatus();
+        scheduleSharing.updateScheduleDisplays();
+      }
     }
   }
 }
@@ -64,11 +68,14 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((html) => {
       document.getElementById("sidebar-container").innerHTML = html;
       setTimeout(() => utils.setupSidebarToggle(), 100);
-
       updateDateTime();
       setInterval(updateDateTime, 1000);
 
-      scheduleSharing.updateScheduleDisplays();
+      // Ensure proper synchronization
+      if (typeof scheduleSharing !== "undefined") {
+        scheduleSharing.syncScheduleStatus();
+        scheduleSharing.updateScheduleDisplays();
+      }
       setupTipsDropdowns();
     })
     .catch((error) => {

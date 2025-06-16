@@ -15,9 +15,13 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((response) => response.text())
     .then((html) => {
       document.getElementById("sidebar-container").innerHTML = html;
-      setTimeout(() => utils.setupSidebarToggle(), 100);
-      scheduleSharing.loadInitialSchedules();
-      setupScheduleFunctionality();
+      setTimeout(() => {
+        utils.setupSidebarToggle();
+
+        scheduleSharing.loadInitialSchedules();
+
+        setupScheduleFunctionality();
+      }, 100);
     })
     .catch((error) => {
       console.error("Error loading components:", error);
@@ -29,37 +33,143 @@ document.addEventListener("DOMContentLoaded", function () {
     const deleteButton = document.querySelector(".delete-btn");
     const scheduleContainer = document.querySelector(".schedule-container");
     let selectedCard = null;
+    let editMode = false;
+    let deleteMode = false;
+    function loadSavedSchedules() {
+      const savedSchedules = JSON.parse(
+        localStorage.getItem("schedules") || "[]"
+      );
+
+      console.log("loadSavedSchedules called with:", savedSchedules);
+
+      if (savedSchedules.length === 0) {
+        console.log("No saved schedules found, keeping defaults");
+        return;
+      }
+
+      const mainScheduleContainer = document.querySelector(
+        ".schedule-container"
+      );
+      const existingCards =
+        mainScheduleContainer.querySelectorAll(".schedule-card");
+      console.log("Clearing", existingCards.length, "existing cards");
+      existingCards.forEach((card) => card.remove());
+
+      savedSchedules.forEach((schedule) => {
+        console.log("Restoring schedule:", schedule);
+        const newCard = document.createElement("div");
+        newCard.className = schedule.isCompleted
+          ? "schedule-card completed"
+          : "schedule-card upcoming";
+
+        if (schedule.isCompleted) {
+          newCard.style.backgroundColor = "#4caf50";
+          newCard.style.color = "white";
+          newCard.setAttribute("data-completed", "true");
+          console.log("Card marked as completed:", schedule.activity);
+        } else if (schedule.backgroundColor) {
+          newCard.style.backgroundColor = schedule.backgroundColor;
+        }
+
+        const cardContent = document.createElement("div");
+        cardContent.className = "schedule-card-content";
+
+        let statusText = schedule.status || "Upcoming";
+        if (schedule.isCompleted) {
+          statusText = "Completed";
+        }
+
+        cardContent.innerHTML = `
+          <div class="schedule-time">${schedule.time}</div>
+          <div class="schedule-info">
+            <h3>${schedule.activity}</h3>
+            <div class="schedule-status${
+              schedule.isActive && !schedule.isCompleted ? " active" : ""
+            }"${
+          schedule.isCompleted
+            ? ' style="background-color: rgba(255, 255, 255, 0.3);"'
+            : ""
+        }>${statusText}</div>
+          </div>
+        `;
+
+        if (!schedule.isCompleted) {
+          const doneBtn = document.createElement("button");
+          doneBtn.className = "done-btn";
+          doneBtn.textContent = "Mark Done";
+          cardContent.appendChild(doneBtn);
+        }
+
+        newCard.appendChild(cardContent);
+        addCardClickHandler(newCard);
+        mainScheduleContainer.appendChild(newCard);
+      });
+
+      setupDoneButtons();
+    }
 
     function setupDoneButtons() {
       document.querySelectorAll(".done-btn").forEach((btn) => {
         if (btn.getAttribute("data-setup") === "true") return;
         btn.setAttribute("data-setup", "true");
-
         btn.addEventListener("click", function (e) {
           e.stopPropagation();
           const card = this.closest(".schedule-card");
+          const activity = card.querySelector(".schedule-info h3").textContent;
 
-          card.style.backgroundColor = "#4caf50";
-          card.style.color = "white";
+          const confirmDiv = document.createElement("div");
 
-          const statusElement = card.querySelector(".schedule-status");
-          statusElement.textContent = "Completed";
-          statusElement.classList.remove("active");
-          statusElement.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+          const confirmText = document.createElement("p");
+          confirmText.textContent = `Are you sure you want to mark "${activity}" as completed?`;
+          confirmText.style.marginBottom = "20px";
 
-          card.setAttribute("data-completed", "true");
+          const buttonDiv = document.createElement("div");
+          buttonDiv.className = "form-actions";
 
-          if (card === selectedCard) {
-            card.classList.remove("selected");
-            selectedCard = null;
-          }
+          const cancelBtn = document.createElement("button");
+          cancelBtn.type = "button";
+          cancelBtn.textContent = "Cancel";
+          cancelBtn.className = "cancel-btn";
 
-          this.style.display = "none";
-          saveSchedules();
+          const confirmBtn = document.createElement("button");
+          confirmBtn.type = "button";
+          confirmBtn.textContent = "Mark as Done";
+          confirmBtn.className = "add-btn";
 
-          if (typeof scheduleSharing !== "undefined") {
-            scheduleSharing.updateScheduleDisplays();
-          }
+          buttonDiv.appendChild(cancelBtn);
+          buttonDiv.appendChild(confirmBtn);
+
+          confirmDiv.appendChild(confirmText);
+          confirmDiv.appendChild(buttonDiv);
+
+          const modal = createModal("Confirm Completion", confirmDiv);
+
+          cancelBtn.addEventListener("click", () => modal.remove());
+          confirmBtn.addEventListener("click", () => {
+            card.style.backgroundColor = "#4caf50";
+            card.style.color = "white";
+
+            const statusElement = card.querySelector(".schedule-status");
+            statusElement.textContent = "Completed";
+            statusElement.classList.remove("active");
+            statusElement.style.backgroundColor = "rgba(255, 255, 255, 0.3)";
+
+            card.setAttribute("data-completed", "true");
+
+            if (card === selectedCard) {
+              card.classList.remove("selected");
+              selectedCard = null;
+            }
+
+            btn.style.display = "none";
+            saveSchedules();
+
+            if (typeof scheduleSharing !== "undefined") {
+              scheduleSharing.updateScheduleDisplays();
+            }
+
+            modal.remove();
+          });
         });
       });
     }
@@ -232,16 +342,65 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
     function editSchedule() {
-      if (!selectedCard) {
-        alert("Please select a schedule to edit");
+      if (!editMode) {
+        if (deleteMode) {
+          exitDeleteMode();
+        }
+
+        clearAllVisualIndicators();
+
+        editMode = true;
+        editButton.textContent = "Cancel Edit";
+        editButton.style.backgroundColor = "#f44336";
+
+        document.querySelectorAll(".schedule-card").forEach((card) => {
+          if (!card.parentElement.classList.contains("main-panel")) {
+            card.style.cursor = "pointer";
+            card.style.border = "2px dashed #2196F3";
+            card.title = "Click to edit this schedule";
+          }
+        });
+
+        const instruction = document.createElement("div");
+        instruction.id = "edit-instruction";
+        instruction.style.cssText = `
+          background: #e3f2fd;
+          color: #1976d2;
+          padding: 10px;
+          border-radius: 5px;
+          margin: 10px 0;
+          text-align: center;
+          font-weight: bold;
+        `;
+        instruction.textContent = "Click on a schedule card to edit it";
+        scheduleContainer.insertBefore(
+          instruction,
+          scheduleContainer.firstChild.nextSibling
+        );
+
+        return;
+      } else {
+        exitEditMode();
         return;
       }
+    }
+    function exitEditMode() {
+      editMode = false;
+      editButton.textContent = "Edit";
+      editButton.style.backgroundColor = "";
 
-      const timeText = selectedCard.querySelector(".schedule-time").textContent;
-      const activity =
-        selectedCard.querySelector(".schedule-info h3").textContent;
+      clearAllVisualIndicators();
+
+      if (selectedCard) {
+        selectedCard.classList.remove("selected");
+        selectedCard = null;
+      }
+    }
+
+    function openEditModal(card) {
+      const timeText = card.querySelector(".schedule-time").textContent;
+      const activity = card.querySelector(".schedule-info h3").textContent;
       const [startTime, endTime] = timeText.split(" - ");
 
       const form = document.createElement("form");
@@ -321,10 +480,12 @@ document.addEventListener("DOMContentLoaded", function () {
       form.appendChild(activityDiv);
       form.appendChild(timeDiv);
       form.appendChild(formActions);
-
       const modal = createModal("Edit Schedule", form);
 
-      cancelBtn.addEventListener("click", () => modal.remove());
+      cancelBtn.addEventListener("click", () => {
+        modal.remove();
+        exitEditMode();
+      });
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -341,15 +502,13 @@ document.addEventListener("DOMContentLoaded", function () {
           return;
         }
 
-        selectedCard.querySelector(
+        card.querySelector(
           ".schedule-time"
         ).textContent = `${newStartTime} - ${newEndTime}`;
-        selectedCard.querySelector(".schedule-info h3").textContent =
-          newActivity;
+        card.querySelector(".schedule-info h3").textContent = newActivity;
 
         modal.remove();
-        selectedCard.classList.remove("selected");
-        selectedCard = null;
+        exitEditMode();
         saveSchedules();
 
         if (typeof scheduleSharing !== "undefined") {
@@ -357,15 +516,64 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
     function deleteSchedule() {
-      if (!selectedCard) {
-        alert("Please select a schedule to delete");
+      if (!deleteMode) {
+        if (editMode) {
+          exitEditMode();
+        }
+
+        clearAllVisualIndicators();
+
+        deleteMode = true;
+        deleteButton.textContent = "Cancel Delete";
+        deleteButton.style.backgroundColor = "#f44336";
+
+        document.querySelectorAll(".schedule-card").forEach((card) => {
+          if (!card.parentElement.classList.contains("main-panel")) {
+            card.style.cursor = "pointer";
+            card.style.border = "2px dashed #f44336";
+            card.title = "Click to delete this schedule";
+          }
+        });
+
+        const instruction = document.createElement("div");
+        instruction.id = "delete-instruction";
+        instruction.style.cssText = `
+          background: #ffebee;
+          color: #c62828;
+          padding: 10px;
+          border-radius: 5px;
+          margin: 10px 0;
+          text-align: center;
+          font-weight: bold;
+        `;
+        instruction.textContent = "Click on a schedule card to delete it";
+        scheduleContainer.insertBefore(
+          instruction,
+          scheduleContainer.firstChild.nextSibling
+        );
+
+        return;
+      } else {
+        exitDeleteMode();
         return;
       }
+    }
+    function exitDeleteMode() {
+      deleteMode = false;
+      deleteButton.textContent = "Delete";
+      deleteButton.style.backgroundColor = "";
 
-      const activity =
-        selectedCard.querySelector(".schedule-info h3").textContent;
+      clearAllVisualIndicators();
+
+      if (selectedCard) {
+        selectedCard.classList.remove("selected");
+        selectedCard = null;
+      }
+    }
+
+    function openDeleteModal(card) {
+      const activity = card.querySelector(".schedule-info h3").textContent;
 
       const confirmDiv = document.createElement("div");
 
@@ -394,11 +602,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const modal = createModal("Confirm Delete", confirmDiv);
 
-      cancelBtn.addEventListener("click", () => modal.remove());
-      confirmBtn.addEventListener("click", function () {
-        selectedCard.remove();
+      cancelBtn.addEventListener("click", () => {
         modal.remove();
-        selectedCard = null;
+        exitDeleteMode();
+      });
+      confirmBtn.addEventListener("click", function () {
+        card.remove();
+        modal.remove();
+        exitDeleteMode();
         saveSchedules();
 
         if (typeof scheduleSharing !== "undefined") {
@@ -406,7 +617,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       });
     }
-
     function saveSchedules() {
       const schedules = [];
       document
@@ -435,11 +645,26 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
       localStorage.setItem("schedules", JSON.stringify(schedules));
-    }
 
+      window.dispatchEvent(
+        new CustomEvent("scheduleUpdated", {
+          detail: { schedules: schedules },
+        })
+      );
+    }
     function addCardClickHandler(card) {
       card.addEventListener("click", function (e) {
         if (e.target.classList.contains("done-btn")) return;
+
+        if (editMode) {
+          openEditModal(this);
+          return;
+        }
+
+        if (deleteMode) {
+          openDeleteModal(this);
+          return;
+        }
 
         if (selectedCard === this) {
           this.classList.remove("selected");
@@ -470,9 +695,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     setupDoneButtons();
-
     addButton.addEventListener("click", addSchedule);
     editButton.addEventListener("click", editSchedule);
     deleteButton.addEventListener("click", deleteSchedule);
+    setTimeout(() => {
+      console.log("Loading saved schedules...");
+      const savedSchedules = JSON.parse(
+        localStorage.getItem("schedules") || "[]"
+      );
+      console.log("Found saved schedules:", savedSchedules);
+      loadSavedSchedules();
+    }, 200);
+
+    function clearAllVisualIndicators() {
+      document.querySelectorAll(".schedule-card").forEach((card) => {
+        if (!card.parentElement.classList.contains("main-panel")) {
+          card.style.cursor = "";
+          card.style.border = "";
+          card.title = "";
+        }
+      });
+
+      const editInstruction = document.getElementById("edit-instruction");
+      const deleteInstruction = document.getElementById("delete-instruction");
+      if (editInstruction) editInstruction.remove();
+      if (deleteInstruction) deleteInstruction.remove();
+    }
   }
 });

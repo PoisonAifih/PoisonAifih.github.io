@@ -134,13 +134,14 @@
   display: block;
   font-size: 11px;
   margin-top: 5px;
-  color: #999;
+  color: #d3d3d3;
 }
 
 .message.received {
   background-color: var(--text-light);
   align-self: flex-start;
   border-bottom-left-radius: 5px;
+  color: white;
 }
 
 .message.sent {

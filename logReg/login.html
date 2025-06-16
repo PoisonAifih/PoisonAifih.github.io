@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BabyVision - Login</title>
+    <link rel="stylesheet" href="../Global/global.css" />
+    <link rel="stylesheet" href="../Global/feedbackStyle.css" />
     <link rel="stylesheet" href="../logReg/loginStyle.css" />
   </head>
   <body>
@@ -21,19 +23,31 @@
           class="login-logo" />
         <h1>Login to BabyVision</h1>
 
-        <form id="loginForm" action="dash.html">
-          <div class="input-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required />
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email" class="form-label">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              class="form-control"
+              required />
+            <div class="error-message" id="email-error"></div>
           </div>
 
-          <div class="input-group">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required />
+          <div class="form-group">
+            <label for="password" class="form-label">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              class="form-control"
+              required />
+            <div class="error-message" id="password-error"></div>
           </div>
 
-          <div class="input-group role-selector">
-            <label>I am a:</label>
+          <div class="form-group role-selector">
+            <label class="form-label">I am a:</label>
             <div class="role-options">
               <div class="role-option">
                 <input
@@ -55,7 +69,9 @@
             </div>
           </div>
 
-          <button type="submit" class="btn login-submit-btn">Login</button>
+          <button type="submit" class="btn btn-primary login-submit-btn">
+            Login
+          </button>
         </form>
 
         <div class="login-footer">
@@ -67,6 +83,7 @@
       </div>
     </div>
 
+    <script src="../Global/feedback.js"></script>
     <script src="loginJs.js"></script>
   </body>
 </html>

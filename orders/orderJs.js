@@ -42,18 +42,25 @@ document.addEventListener("DOMContentLoaded", function () {
           actionButtons.style.display = "none";
         }
       }
-
       const finishBtn = card.querySelector(".btn-finish");
       if (finishBtn) {
         finishBtn.addEventListener("click", function () {
-          saveOrderStatus(orderId, "finished");
+          showConfirmationModal(
+            "Finish Order",
+            "Are you sure you want to finish this order?",
+            () => saveOrderStatus(orderId, "finished")
+          );
         });
       }
 
       const cancelBtn = card.querySelector(".btn-cancel");
       if (cancelBtn) {
         cancelBtn.addEventListener("click", function () {
-          saveOrderStatus(orderId, "cancelled");
+          showConfirmationModal(
+            "Cancel Order",
+            "Are you sure you want to cancel this order?",
+            () => saveOrderStatus(orderId, "cancelled")
+          );
         });
       }
     });
@@ -79,5 +86,46 @@ document.addEventListener("DOMContentLoaded", function () {
         actionButtons.style.display = "none";
       }
     });
+  }
+
+  function showConfirmationModal(title, message, onConfirm) {
+    const modal = document.getElementById("confirmationModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const cancelBtn = document.getElementById("cancelModalBtn");
+    const closeBtn = modal.querySelector(".close");
+
+    modalTitle.textContent = title;
+    modalMessage.textContent = message;
+    modal.style.display = "block";
+
+    // Remove existing event listeners
+    const newConfirmBtn = confirmBtn.cloneNode(true);
+    confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+
+    const newCancelBtn = cancelBtn.cloneNode(true);
+    cancelBtn.parentNode.replaceChild(newCancelBtn, cancelBtn);
+
+    // Add new event listeners
+    newConfirmBtn.addEventListener("click", function () {
+      onConfirm();
+      closeModal();
+    });
+
+    newCancelBtn.addEventListener("click", closeModal);
+    closeBtn.addEventListener("click", closeModal);
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        closeModal();
+      }
+    });
+  }
+
+  function closeModal() {
+    const modal = document.getElementById("confirmationModal");
+    modal.style.display = "none";
   }
 });
