@@ -1,0 +1,141 @@
+:root {
+    --red: #f98080;
+    --yellow: #ffed4e;
+    --blue: #9bd7ff;
+    --cream: #ffeaa7;
+    --text-dark: #2d3748;
+    --text-light: #4a5568;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7fafc;
+    color: var(--text-dark);
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .help-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 30px;
+    background: linear-gradient(135deg, var(--red), var(--yellow));
+    border-radius: var(--border-radius);
+    color: white;
+  }
+  
+  .help-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .help-header p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+  }
+  
+  .help-sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .help-card {
+    background: white;
+    padding: 25px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+  }
+  
+  .help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  }
+  
+  .help-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+  
+  .help-card h3 {
+    color: var(--text-dark);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+  }
+  
+  .help-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  .quick-start {
+    background: white;
+    padding: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+  }
+  
+  .quick-start h2 {
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .quick-start ol {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .quick-start li {
+    margin-bottom: 15px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 768px) {
+    .content {
+      margin-left: 0;
+      padding: 15px;
+    }
+    
+    .help-header h1 {
+      font-size: 2rem;
+    }
+    
+    .help-sections {
+      grid-template-columns: 1fr;
+    }
+    
+    .help-card {
+      padding: 20px;
+    }
+  }

@@ -152,6 +152,11 @@ input:checked + .slider:before{
     transition: background-color 0.3s ease;
 }
 
+.setting-btn a{
+    color: white;
+    text-decoration: none;
+}
+
 .setting-btn:hover{
     background-color: #8fb3c7;
 }
